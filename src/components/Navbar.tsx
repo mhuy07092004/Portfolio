@@ -2,9 +2,9 @@ import { useRef, useState, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Link } from "react-scroll";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, useGSAP);
 
 const NAV_LINKS = [
   { label: "About", to: "about" },
@@ -13,15 +13,45 @@ const NAV_LINKS = [
   { label: "Contact", to: "contact" },
 ];
 
+function scrollToSection(id: string) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const offset = 70;
+  const top = el.getBoundingClientRect().top + window.scrollY - offset;
+  gsap.to(window, { scrollTo: { y: top }, duration: 0.8, ease: "power2.inOut" });
+}
+
 export default function Navbar() {
   const navRef = useRef<HTMLElement>(null);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Active section detection via IntersectionObserver
+  useEffect(() => {
+    const ids = NAV_LINKS.map((l) => l.to);
+    const observers: IntersectionObserver[] = [];
+
+    ids.forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) setActiveSection(id);
+        },
+        { rootMargin: "-40% 0px -55% 0px", threshold: 0 }
+      );
+      observer.observe(el);
+      observers.push(observer);
+    });
+
+    return () => observers.forEach((o) => o.disconnect());
   }, []);
 
   useGSAP(
@@ -42,44 +72,39 @@ export default function Navbar() {
     >
       <div className="max-w-6xl mx-auto px-6 md:px-12 flex items-center justify-between relative">
         {/* Logo */}
-        <Link
-          to="hero"
-          smooth
-          duration={600}
+        <button
+          onClick={() => gsap.to(window, { scrollTo: { y: 0 }, duration: 0.8, ease: "power2.inOut" })}
           className="cursor-pointer text-amber-400 font-bold text-lg tracking-tight hover:text-amber-300 transition-colors"
-        >
-        </Link>
+        />
 
         {/* Desktop links — centered absolutely */}
         <ul className="hidden md:flex items-center gap-6 absolute left-1/2 -translate-x-1/2">
           {NAV_LINKS.map(({ label, to }) =>
             label === "Projects" ? (
               <li key={to}>
-                <Link
-                  to={to}
-                  smooth
-                  duration={600}
-                  offset={-70}
-                  spy
-                  activeClass="!bg-amber-400 !text-charcoal-900 !border-amber-400"
-                  className="cursor-pointer text-sm font-semibold text-amber-400 border border-amber-400 rounded px-4 py-1.5 tracking-wide hover:bg-amber-400 hover:text-charcoal-900 transition-all duration-200"
+                <button
+                  onClick={() => scrollToSection(to)}
+                  className={`cursor-pointer text-sm font-semibold border rounded px-4 py-1.5 tracking-wide transition-all duration-200 ${
+                    activeSection === to
+                      ? "bg-amber-400 text-charcoal-900 border-amber-400"
+                      : "text-amber-400 border-amber-400 hover:bg-amber-400 hover:text-charcoal-900"
+                  }`}
                 >
                   {label}
-                </Link>
+                </button>
               </li>
             ) : (
               <li key={to}>
-                <Link
-                  to={to}
-                  smooth
-                  duration={600}
-                  offset={-70}
-                  spy
-                  activeClass="!text-amber-400"
-                  className="cursor-pointer text-sm text-stone-400 hover:text-amber-300 transition-colors tracking-wide"
+                <button
+                  onClick={() => scrollToSection(to)}
+                  className={`cursor-pointer text-sm tracking-wide transition-colors ${
+                    activeSection === to
+                      ? "text-amber-400"
+                      : "text-stone-400 hover:text-amber-300"
+                  }`}
                 >
                   {label}
-                </Link>
+                </button>
               </li>
             )
           )}
@@ -116,33 +141,29 @@ export default function Navbar() {
             {NAV_LINKS.map(({ label, to }) =>
               label === "Projects" ? (
                 <li key={to}>
-                  <Link
-                    to={to}
-                    smooth
-                    duration={600}
-                    offset={-70}
-                    spy
-                    activeClass="!bg-amber-400 !text-charcoal-900 !border-amber-400"
-                    className="cursor-pointer text-sm font-semibold text-amber-400 border border-amber-400 rounded px-4 py-1.5 tracking-wide hover:bg-amber-400 hover:text-charcoal-900 transition-all duration-200 inline-block"
-                    onClick={() => setMenuOpen(false)}
+                  <button
+                    onClick={() => { scrollToSection(to); setMenuOpen(false); }}
+                    className={`cursor-pointer text-sm font-semibold border rounded px-4 py-1.5 tracking-wide transition-all duration-200 ${
+                      activeSection === to
+                        ? "bg-amber-400 text-charcoal-900 border-amber-400"
+                        : "text-amber-400 border-amber-400 hover:bg-amber-400 hover:text-charcoal-900"
+                    }`}
                   >
                     {label}
-                  </Link>
+                  </button>
                 </li>
               ) : (
                 <li key={to}>
-                  <Link
-                    to={to}
-                    smooth
-                    duration={600}
-                    offset={-70}
-                    spy
-                    activeClass="!text-amber-400"
-                    className="cursor-pointer text-sm text-stone-400 hover:text-amber-300 transition-colors tracking-wide"
-                    onClick={() => setMenuOpen(false)}
+                  <button
+                    onClick={() => { scrollToSection(to); setMenuOpen(false); }}
+                    className={`cursor-pointer text-sm tracking-wide transition-colors ${
+                      activeSection === to
+                        ? "text-amber-400"
+                        : "text-stone-400 hover:text-amber-300"
+                    }`}
                   >
                     {label}
-                  </Link>
+                  </button>
                 </li>
               )
             )}
