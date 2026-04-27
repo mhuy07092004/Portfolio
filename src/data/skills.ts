@@ -12,24 +12,40 @@ export interface SkillGroup {
 
 const skills: SkillGroup[] = [
   {
-    category: "Frontend",
+    category: "Languages",
     skills: [
-      { label: "React", status: "active" },
       { label: "TypeScript", status: "active" },
       { label: "JavaScript", status: "active" },
+      { label: "HTML", status: "active" },
+      { label: "CSS", status: "active" },
+      { label: "Python", status: "active" },
+      { label: "C++", status: "learning" },
+    ],
+  },
+  {
+    category: "Framework & Libraries",
+    skills: [
+      { label: "React", status: "active" },
       { label: "Tailwind CSS", status: "active" },
-      { label: "HTML & CSS", status: "active" },
-      { label: "Vite", status: "active" },
       { label: "GSAP", status: "active" },
       { label: "Next.js", status: "learning" },
     ],
   },
   {
-    category: "Tools & DevOps",
+    category: "Backend & Database",
     skills: [
+      { label: "Node.js", status: "learning" },
+      { label: "PostgreSQL", status: "learning" },
+      { label: "MongoDB", status: "learning" },
+    ],
+  },
+  {
+    category: "Tools & Platforms",
+    skills: [
+      { label: "Vite", status: "active" },
       { label: "Git & GitHub", status: "active" },
-      { label: "VS Code", status: "active" },
       { label: "npm / pnpm", status: "active" },
+      { label: "Vercel", status: "active" },
       { label: "Docker", status: "learning" },
       { label: "Linux CLI", status: "learning" },
       { label: "CI/CD", status: "learning" },
@@ -38,12 +54,11 @@ const skills: SkillGroup[] = [
   {
     category: "Security & Networking",
     skills: [
-      { label: "Networking Fundamentals", status: "learning" },
-      { label: "TCP/IP", status: "learning" },
+      { label: "Networking Fundamentals", status: "active" },
+      { label: "TCP/IP", status: "active" },
       { label: "Kali Linux", status: "learning" },
       { label: "OWASP Top 10", status: "learning" },
       { label: "Burp Suite", status: "learning" },
-      { label: "Cryptography Basics", status: "learning" },
     ],
   },
 ];

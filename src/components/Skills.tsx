@@ -1,60 +1,46 @@
-import {
-  SiReact,
-  SiTypescript,
-  SiJavascript,
-  SiTailwindcss,
-  SiHtml5,
-  SiVite,
-  SiGit,
-  SiDocker,
-  SiLinux,
-  SiGithub,
-  SiKalilinux,
-  SiNextdotjs,
-} from "react-icons/si";
-import { TbPlayerPlay, TbNetwork, TbShieldLock, TbKey } from "react-icons/tb";
-import { VscTerminalBash } from "react-icons/vsc";
-import { MdBuild } from "react-icons/md";
-import { useScrollAnimation } from "../hooks/useScrollAnimation";
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import skills from "../data/skills";
 import type { Skill } from "../data/skills";
+import { TECH_ICONS, TECH_COLORS } from "../lib/techIcons";
 
-const ICON_MAP: Record<string, React.ReactNode> = {
-  React: <SiReact />,
-  TypeScript: <SiTypescript />,
-  JavaScript: <SiJavascript />,
-  "Tailwind CSS": <SiTailwindcss />,
-  "HTML & CSS": <SiHtml5 />,
-  Vite: <SiVite />,
-  GSAP: <TbPlayerPlay />,
-  "Next.js": <SiNextdotjs />,
-  "Git & GitHub": <SiGit />,
-  "npm / pnpm": <MdBuild />,
-  Docker: <SiDocker />,
-  "Linux CLI": <SiLinux />,
-  "CI/CD": <VscTerminalBash />,
-  "VS Code": <SiGithub />,
-  "Networking Fundamentals": <TbNetwork />,
-  "TCP/IP": <TbNetwork />,
-  "Kali Linux": <SiKalilinux />,
-  "OWASP Top 10": <TbShieldLock />,
-  "Burp Suite": <TbShieldLock />,
-  "Cryptography Basics": <TbKey />,
-};
+gsap.registerPlugin(ScrollTrigger);
 
 function SkillPill({ skill }: { skill: Skill }) {
-  const icon = ICON_MAP[skill.label];
+  const icon = TECH_ICONS[skill.label];
   const isActive = skill.status === "active";
+  const rawColor = TECH_COLORS[skill.label];
+  // Use amber as fallback for mid-dark brand colors that don't contrast well as accents
+  const accentColor = isActive
+    ? rawColor && rawColor !== "#888888"
+      ? rawColor
+      : "#d97706"
+    : undefined;
 
   return (
     <div
-      className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border text-sm font-medium tracking-wide transition-colors ${
+      className={`skill-pill flex items-center gap-2 px-4 py-2.5 rounded-xl border text-sm font-medium tracking-wide transition-all duration-200 ${
         isActive
-          ? "bg-amber-50 border-amber-300 text-amber-800"
-          : "bg-cream-200 border-cream-300 text-warm-muted"
+          ? "skill-pill-active bg-white text-charcoal-900 border-transparent"
+          : "skill-pill-learning bg-cream-200 border-cream-300 text-warm-muted opacity-60"
       }`}
+      style={
+        accentColor
+          ? {
+              borderColor: accentColor,
+              boxShadow: `0 0 0 1px ${accentColor}35, 0 2px 10px ${accentColor}22`,
+            }
+          : undefined
+      }
     >
-      <span className={`text-base ${isActive ? "text-amber-500" : "text-stone-400"}`}>
+      <span
+        className={`text-[18px] shrink-0 [&_svg]:block ${
+          !rawColor ? (isActive ? "text-amber-500" : "text-stone-400") : ""
+        }`}
+        style={rawColor ? { color: rawColor } : undefined}
+      >
         {icon}
       </span>
       {skill.label}
@@ -68,30 +54,114 @@ function SkillPill({ skill }: { skill: Skill }) {
 }
 
 export default function Skills() {
-  const sectionRef = useScrollAnimation(".anim");
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      // Section headings fade-up
+      const metaEls = gsap.utils.toArray<HTMLElement>(
+        ".skills-meta",
+        sectionRef.current ?? undefined
+      );
+      metaEls.forEach((el) => {
+        gsap.fromTo(
+          el,
+          { y: 40, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.6,
+            ease: "power2.out",
+            scrollTrigger: { trigger: el, start: "top 88%", once: true },
+          }
+        );
+      });
+
+      const mm = gsap.matchMedia();
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        // Skill group containers: staggered fade-up
+        const groups = gsap.utils.toArray<HTMLElement>(
+          ".skill-group",
+          sectionRef.current ?? undefined
+        );
+        gsap.set(groups, { y: 28, opacity: 0 });
+        ScrollTrigger.batch(groups, {
+          onEnter: (batch) =>
+            gsap.to(batch, {
+              y: 0,
+              opacity: 1,
+              duration: 0.55,
+              ease: "power2.out",
+              stagger: 0.1,
+            }),
+          start: "top 88%",
+          once: true,
+        });
+
+        // Active pills: scale-pop for extra emphasis
+        const activePills = gsap.utils.toArray<HTMLElement>(
+          ".skill-pill-active",
+          sectionRef.current ?? undefined
+        );
+        gsap.set(activePills, { scale: 0.82, opacity: 0 });
+        ScrollTrigger.batch(activePills, {
+          onEnter: (batch) =>
+            gsap.to(batch, {
+              scale: 1,
+              opacity: 1,
+              duration: 0.42,
+              ease: "back.out(1.8)",
+              stagger: 0.04,
+            }),
+          start: "top 88%",
+          once: true,
+        });
+
+        // Learning pills: gentle fade-in at reduced opacity
+        const learningPills = gsap.utils.toArray<HTMLElement>(
+          ".skill-pill-learning",
+          sectionRef.current ?? undefined
+        );
+        gsap.set(learningPills, { y: 12, opacity: 0 });
+        ScrollTrigger.batch(learningPills, {
+          onEnter: (batch) =>
+            gsap.to(batch, {
+              y: 0,
+              opacity: 0.6,
+              duration: 0.4,
+              ease: "power2.out",
+              stagger: 0.035,
+            }),
+          start: "top 88%",
+          once: true,
+        });
+      });
+
+      return () => mm.revert();
+    },
+    { scope: sectionRef }
+  );
 
   return (
     <section
       id="skills"
-      ref={sectionRef as React.RefObject<HTMLElement>}
+      ref={sectionRef}
       className="section-padding bg-cream-200 font-mono"
     >
       <div className="max-w-6xl mx-auto">
-        <p className="anim text-xs tracking-[0.3em] uppercase text-amber-600 mb-3">
+        <p className="skills-meta text-xs tracking-[0.3em] uppercase text-amber-600 mb-3">
           03 / Skills
         </p>
-        <h2 className="anim text-3xl md:text-4xl font-bold text-charcoal-900 mb-4 tracking-tight">
+        <h2 className="skills-meta text-3xl md:text-4xl font-bold text-charcoal-900 mb-4 tracking-tight">
           My Toolkit
         </h2>
-        <p className="anim text-warm-gray text-sm mb-12 max-w-lg">
-          Tools I use daily, and ones I'm actively building fluency in.{" "}
-          <span className="text-amber-600">Amber</span> = active,{" "}
-          <span className="text-stone-400">muted</span> = learning.
+        <p className="skills-meta text-warm-gray text-sm mb-12 max-w-lg">
+          Technologies I use daily to build and learn web applications.
         </p>
 
         <div className="space-y-12">
           {skills.map((group) => (
-            <div key={group.category} className="anim">
+            <div key={group.category} className="skill-group">
               <h3 className="text-xs font-semibold uppercase tracking-[0.25em] text-warm-gray mb-5 pb-3 border-b border-cream-300">
                 {group.category}
               </h3>

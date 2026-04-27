@@ -14,8 +14,8 @@ const projects: Project[] = [
     name: "ParkIt",
     tagline: "Smart parking system",
     description:
-      "A browser-based password manager with AES-256 encryption, master password hashing, and a clean dashboard for managing credentials.",
-    tech: ["React", "TypeScript", "Web Crypto API", "Tailwind CSS"],
+      "example description",
+    tech: ["React", "JavaScript", "Python", "Flask", "PostgreSQL"],
     github: "https://github.com",
     live: null,
   },
@@ -24,8 +24,8 @@ const projects: Project[] = [
     name: "Workmate",
     tagline: "Smart job matching",
     description:
-      "A lightweight network monitoring tool that visualises open ports, active hosts, and basic vulnerability flags on a local subnet.",
-    tech: ["Python", "Flask", "React", "Nmap", "SQLite"],
+      "example description",
+    tech: ["React", "JavaScript", "Python", "Flask", "PostgreSQL", "Tailwind CSS"],
     github: "https://github.com",
     live: null,
   },
@@ -34,8 +34,8 @@ const projects: Project[] = [
     name: "Brookie",
     tagline: "E-commerce website",
     description:
-      "This portfolio site — built to practice modern frontend tooling, GSAP animations, and clean responsive design without any UI libraries.",
-    tech: ["Vite", "React", "TypeScript", "Tailwind CSS", "GSAP"],
+      "example description",
+      tech: ["React", "TypeScript", "Python", "GSAP", "Tailwind CSS", "PostgreSQL", "Docker"],
     github: "https://github.com",
     live: "https://example.com",
   },
