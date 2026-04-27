@@ -1,0 +1,10 @@
+{
+  "plugins": {
+    "gsap-skills": {
+      "enabled": true
+    },
+    "neon-postgres": {
+      "enabled": true
+    }
+  }
+}
