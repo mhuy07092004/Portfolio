@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { Link } from "react-scroll";
@@ -82,18 +82,111 @@ export default function Hero() {
 }
 
 function DotGrid() {
-  return (
-    <div
-      className="absolute inset-0 opacity-30"
-      style={{
-        backgroundImage:
-          "radial-gradient(circle, #D97706 1px, transparent 1px)",
-        backgroundSize: "28px 28px",
-        maskImage:
-          "radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)",
-        WebkitMaskImage:
-          "radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)",
-      }}
-    />
-  );
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const mouseRef = useRef({ x: -9999, y: -9999 });
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const SPACING = 28;
+    const DOT_RADIUS = 1;
+    const INFLUENCE_RADIUS = 110;
+    const MAX_PUSH = 18;
+
+    type Dot = { ox: number; oy: number; x: number; y: number };
+    let dots: Dot[] = [];
+    let animId: number;
+
+    function buildDots() {
+      dots = [];
+      const cols = Math.ceil(canvas!.width / SPACING) + 1;
+      const rows = Math.ceil(canvas!.height / SPACING) + 1;
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const ox = c * SPACING;
+          const oy = r * SPACING;
+          dots.push({ ox, oy, x: ox, y: oy });
+        }
+      }
+    }
+
+    function resize() {
+      canvas!.width = canvas!.offsetWidth;
+      canvas!.height = canvas!.offsetHeight;
+      buildDots();
+    }
+
+    function draw() {
+      ctx!.clearRect(0, 0, canvas!.width, canvas!.height);
+      const mx = mouseRef.current.x;
+      const my = mouseRef.current.y;
+      const cx = canvas!.width / 2;
+      const cy = canvas!.height / 2;
+      const maxFadeDist = Math.sqrt(cx * cx + cy * cy) * 0.8;
+
+      for (const dot of dots) {
+        const dx = dot.x - mx;
+        const dy = dot.y - my;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        let targetX = dot.ox;
+        let targetY = dot.oy;
+
+        if (dist < INFLUENCE_RADIUS && dist > 0) {
+          const force = (1 - dist / INFLUENCE_RADIUS) * MAX_PUSH;
+          const angle = Math.atan2(dy, dx);
+          targetX = dot.ox + Math.cos(angle) * force;
+          targetY = dot.oy + Math.sin(angle) * force;
+        }
+
+        dot.x += (targetX - dot.x) * 0.12;
+        dot.y += (targetY - dot.y) * 0.12;
+
+        const distFromCenter = Math.sqrt((dot.ox - cx) ** 2 + (dot.oy - cy) ** 2);
+        const fade = Math.max(0, 1 - distFromCenter / maxFadeDist);
+
+        const isNearMouse = dist < INFLUENCE_RADIUS;
+        const glow = isNearMouse ? (1 - dist / INFLUENCE_RADIUS) * 0.5 : 0;
+        const alpha = Math.min(1, 0.55 * fade + glow) * fade;
+
+        ctx!.beginPath();
+        ctx!.arc(dot.x, dot.y, DOT_RADIUS + (isNearMouse ? (1 - dist / INFLUENCE_RADIUS) * 1.2 : 0), 0, Math.PI * 2);
+        ctx!.fillStyle = `rgba(217, 119, 6, ${alpha})`;
+        ctx!.fill();
+      }
+
+      animId = requestAnimationFrame(draw);
+    }
+
+    function onMouseMove(e: MouseEvent) {
+      const rect = canvas!.getBoundingClientRect();
+      mouseRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    }
+
+    function onMouseLeave() {
+      mouseRef.current = { x: -9999, y: -9999 };
+    }
+
+    resize();
+    draw();
+
+    const ro = new ResizeObserver(resize);
+    ro.observe(canvas);
+
+    const parent = canvas.parentElement;
+    parent?.addEventListener("mousemove", onMouseMove);
+    parent?.addEventListener("mouseleave", onMouseLeave);
+
+    return () => {
+      cancelAnimationFrame(animId);
+      ro.disconnect();
+      parent?.removeEventListener("mousemove", onMouseMove);
+      parent?.removeEventListener("mouseleave", onMouseLeave);
+    };
+  }, []);
+
+  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />;
 }
