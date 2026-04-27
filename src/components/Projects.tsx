@@ -6,19 +6,46 @@ import { FiGithub, FiExternalLink } from "react-icons/fi";
 import projects from "../data/projects";
 import type { Project } from "../data/projects";
 import { TECH_ICONS, TECH_COLORS } from "../lib/techIcons";
+import { TECH_URLS } from "../lib/techUrls";
 
 gsap.registerPlugin(ScrollTrigger);
 
 function TechIcon({ label }: { label: string }) {
   const icon = TECH_ICONS[label];
   const color = TECH_COLORS[label];
+  const href = TECH_URLS[label];
   if (!icon) return null;
+
+  const iconInner = (
+    <span
+      className="text-[22px] [&_svg]:block transition-transform duration-200 group-hover:scale-110"
+      style={color ? { color } : undefined}
+    >
+      {icon}
+    </span>
+  );
+
+  if (href) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        title={label}
+        aria-label={`${label} (official site)`}
+        className="group inline-flex items-center justify-center rounded-lg p-1 -m-1 transition-all duration-250 ease-out hover:scale-[1.06] hover:shadow-[0_8px_32px_rgba(217,119,6,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500"
+      >
+        {iconInner}
+      </a>
+    );
+  }
+
   return (
     <span
       title={label}
       aria-label={label}
       role="img"
-      className="text-[22px] [&_svg]:block transition-transform duration-150 hover:scale-125"
+      className="inline-flex text-[22px] [&_svg]:block p-1 -m-1"
       style={color ? { color } : undefined}
     >
       {icon}

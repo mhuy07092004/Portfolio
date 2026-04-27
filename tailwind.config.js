@@ -26,6 +26,9 @@ export default {
       fontFamily: {
         mono: ['"JetBrains Mono"', "monospace"],
       },
+      transitionDuration: {
+        250: "250ms",
+      },
       animation: {
         "bounce-slow": "bounce 2s infinite",
       },

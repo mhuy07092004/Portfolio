@@ -19,13 +19,21 @@ function SkillPill({ skill }: { skill: Skill }) {
       : "#d97706"
     : undefined;
 
+  // Hover "lift" shadow like Contact cards; !shadow overrides inline base shadow on hover
+  const hoverShadowClass = isActive
+    ? "hover:!shadow-[0_8px_32px_rgba(217,119,6,0.2)]"
+    : "hover:!shadow-[0_8px_28px_rgba(120,113,108,0.16)]";
+
   return (
-    <div
-      className={`skill-pill flex items-center gap-2 px-4 py-2.5 rounded-xl border text-sm font-medium tracking-wide transition-all duration-200 ${
+    <a
+      href={skill.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`skill-pill group inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border text-sm font-medium tracking-wide transition-all duration-250 ease-out hover:scale-[1.06] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500 ${
         isActive
-          ? "skill-pill-active bg-white text-charcoal-900 border-transparent"
-          : "skill-pill-learning bg-cream-200 border-cream-300 text-warm-muted opacity-60"
-      }`}
+          ? "skill-pill-active bg-white text-charcoal-900 border-transparent hover:border-amber-600/35"
+          : "skill-pill-learning bg-cream-200 border-cream-300 text-warm-muted opacity-60 hover:opacity-90 hover:border-stone-400/50"
+      } ${hoverShadowClass}`}
       style={
         accentColor
           ? {
@@ -36,7 +44,7 @@ function SkillPill({ skill }: { skill: Skill }) {
       }
     >
       <span
-        className={`text-[18px] shrink-0 [&_svg]:block ${
+        className={`text-[18px] shrink-0 transition-transform duration-200 group-hover:scale-110 [&_svg]:block ${
           !rawColor ? (isActive ? "text-amber-500" : "text-stone-400") : ""
         }`}
         style={rawColor ? { color: rawColor } : undefined}
@@ -49,7 +57,7 @@ function SkillPill({ skill }: { skill: Skill }) {
           learning
         </span>
       )}
-    </div>
+    </a>
   );
 }
 

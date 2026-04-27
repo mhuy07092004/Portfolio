@@ -16,8 +16,8 @@ const projects: Project[] = [
     description:
       "example description",
     tech: ["React", "JavaScript", "Python", "Flask", "PostgreSQL"],
-    github: "https://github.com",
-    live: null,
+    github: "https://github.com/httn113/CSCI334---ParkIT",
+    live: "https://parkit-n05lsq1v7-longtran1406s-projects.vercel.app/login",
   },
   {
     id: 2,
@@ -26,7 +26,7 @@ const projects: Project[] = [
     description:
       "example description",
     tech: ["React", "JavaScript", "Python", "Flask", "PostgreSQL", "Tailwind CSS"],
-    github: "https://github.com",
+    github: "https://github.com/mhuy07092004/Workmate",
     live: null,
   },
   {
@@ -36,8 +36,8 @@ const projects: Project[] = [
     description:
       "example description",
       tech: ["React", "TypeScript", "Python", "GSAP", "Tailwind CSS", "PostgreSQL", "Docker"],
-    github: "https://github.com",
-    live: "https://example.com",
+    github: "https://github.com/mhuy07092004/Cookies-Shop-Website",
+    live: null,
   },
 ];
 
