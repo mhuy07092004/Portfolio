@@ -79,35 +79,20 @@ export default function Navbar() {
 
         {/* Desktop links — centered absolutely */}
         <ul className="hidden md:flex items-center gap-6 absolute left-1/2 -translate-x-1/2">
-          {NAV_LINKS.map(({ label, to }) =>
-            label === "Projects" ? (
-              <li key={to}>
-                <button
-                  onClick={() => scrollToSection(to)}
-                  className={`cursor-pointer text-sm font-semibold border rounded px-4 py-1.5 tracking-wide transition-all duration-200 ${
-                    activeSection === to
-                      ? "bg-amber-400 text-charcoal-900 border-amber-400"
-                      : "text-amber-400 border-amber-400 hover:bg-amber-400 hover:text-charcoal-900"
-                  }`}
-                >
-                  {label}
-                </button>
-              </li>
-            ) : (
-              <li key={to}>
-                <button
-                  onClick={() => scrollToSection(to)}
-                  className={`cursor-pointer text-sm tracking-wide transition-colors ${
-                    activeSection === to
-                      ? "text-amber-400"
-                      : "text-stone-400 hover:text-amber-300"
-                  }`}
-                >
-                  {label}
-                </button>
-              </li>
-            )
-          )}
+          {NAV_LINKS.map(({ label, to }) => (
+            <li key={to}>
+              <button
+                onClick={() => scrollToSection(to)}
+                className={`cursor-pointer text-sm tracking-wide transition-all duration-200 ${
+                  activeSection === to
+                    ? "font-semibold border rounded px-4 py-1.5 bg-amber-400 text-charcoal-900 border-amber-400"
+                    : "text-stone-400 hover:text-amber-300"
+                }`}
+              >
+                {label}
+              </button>
+            </li>
+          ))}
         </ul>
 
         {/* Mobile hamburger */}
@@ -138,35 +123,20 @@ export default function Navbar() {
       {menuOpen && (
         <div className="md:hidden bg-charcoal-900 border-t border-charcoal-700 px-6 py-4">
           <ul className="flex flex-col gap-4">
-            {NAV_LINKS.map(({ label, to }) =>
-              label === "Projects" ? (
+            {NAV_LINKS.map(({ label, to }) => (
                 <li key={to}>
                   <button
                     onClick={() => { scrollToSection(to); setMenuOpen(false); }}
-                    className={`cursor-pointer text-sm font-semibold border rounded px-4 py-1.5 tracking-wide transition-all duration-200 ${
+                    className={`cursor-pointer text-sm tracking-wide transition-all duration-200 ${
                       activeSection === to
-                        ? "bg-amber-400 text-charcoal-900 border-amber-400"
-                        : "text-amber-400 border-amber-400 hover:bg-amber-400 hover:text-charcoal-900"
-                    }`}
-                  >
-                    {label}
-                  </button>
-                </li>
-              ) : (
-                <li key={to}>
-                  <button
-                    onClick={() => { scrollToSection(to); setMenuOpen(false); }}
-                    className={`cursor-pointer text-sm tracking-wide transition-colors ${
-                      activeSection === to
-                        ? "text-amber-400"
+                        ? "font-semibold border rounded px-4 py-1.5 bg-amber-400 text-charcoal-900 border-amber-400"
                         : "text-stone-400 hover:text-amber-300"
                     }`}
                   >
                     {label}
                   </button>
                 </li>
-              )
-            )}
+              ))}
           </ul>
         </div>
       )}
