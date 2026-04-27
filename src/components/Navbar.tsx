@@ -40,7 +40,7 @@ export default function Navbar() {
           : "bg-charcoal-900 py-5"
       }`}
     >
-      <div className="max-w-6xl mx-auto px-6 md:px-12 flex items-center justify-between">
+      <div className="max-w-6xl mx-auto px-6 md:px-12 flex items-center justify-between relative">
         {/* Logo */}
         <Link
           to="hero"
@@ -48,26 +48,41 @@ export default function Navbar() {
           duration={600}
           className="cursor-pointer text-amber-400 font-bold text-lg tracking-tight hover:text-amber-300 transition-colors"
         >
-          hl.dev
         </Link>
 
-        {/* Desktop links */}
-        <ul className="hidden md:flex items-center gap-8">
-          {NAV_LINKS.map(({ label, to }) => (
-            <li key={to}>
-              <Link
-                to={to}
-                smooth
-                duration={600}
-                offset={-70}
-                spy
-                activeClass="!text-amber-400"
-                className="cursor-pointer text-sm text-stone-400 hover:text-amber-300 transition-colors tracking-wide"
-              >
-                {label}
-              </Link>
-            </li>
-          ))}
+        {/* Desktop links — centered absolutely */}
+        <ul className="hidden md:flex items-center gap-6 absolute left-1/2 -translate-x-1/2">
+          {NAV_LINKS.map(({ label, to }) =>
+            label === "Projects" ? (
+              <li key={to}>
+                <Link
+                  to={to}
+                  smooth
+                  duration={600}
+                  offset={-70}
+                  spy
+                  activeClass="!bg-amber-400 !text-charcoal-900 !border-amber-400"
+                  className="cursor-pointer text-sm font-semibold text-amber-400 border border-amber-400 rounded px-4 py-1.5 tracking-wide hover:bg-amber-400 hover:text-charcoal-900 transition-all duration-200"
+                >
+                  {label}
+                </Link>
+              </li>
+            ) : (
+              <li key={to}>
+                <Link
+                  to={to}
+                  smooth
+                  duration={600}
+                  offset={-70}
+                  spy
+                  activeClass="!text-amber-400"
+                  className="cursor-pointer text-sm text-stone-400 hover:text-amber-300 transition-colors tracking-wide"
+                >
+                  {label}
+                </Link>
+              </li>
+            )
+          )}
         </ul>
 
         {/* Mobile hamburger */}
@@ -98,22 +113,39 @@ export default function Navbar() {
       {menuOpen && (
         <div className="md:hidden bg-charcoal-900 border-t border-charcoal-700 px-6 py-4">
           <ul className="flex flex-col gap-4">
-            {NAV_LINKS.map(({ label, to }) => (
-              <li key={to}>
-                <Link
-                  to={to}
-                  smooth
-                  duration={600}
-                  offset={-70}
-                  spy
-                  activeClass="!text-amber-400"
-                  className="cursor-pointer text-sm text-stone-400 hover:text-amber-300 transition-colors tracking-wide"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  {label}
-                </Link>
-              </li>
-            ))}
+            {NAV_LINKS.map(({ label, to }) =>
+              label === "Projects" ? (
+                <li key={to}>
+                  <Link
+                    to={to}
+                    smooth
+                    duration={600}
+                    offset={-70}
+                    spy
+                    activeClass="!bg-amber-400 !text-charcoal-900 !border-amber-400"
+                    className="cursor-pointer text-sm font-semibold text-amber-400 border border-amber-400 rounded px-4 py-1.5 tracking-wide hover:bg-amber-400 hover:text-charcoal-900 transition-all duration-200 inline-block"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    {label}
+                  </Link>
+                </li>
+              ) : (
+                <li key={to}>
+                  <Link
+                    to={to}
+                    smooth
+                    duration={600}
+                    offset={-70}
+                    spy
+                    activeClass="!text-amber-400"
+                    className="cursor-pointer text-sm text-stone-400 hover:text-amber-300 transition-colors tracking-wide"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    {label}
+                  </Link>
+                </li>
+              )
+            )}
           </ul>
         </div>
       )}
