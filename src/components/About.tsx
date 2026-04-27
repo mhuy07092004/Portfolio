@@ -87,23 +87,60 @@ export default function About() {
               </div>
             </div>
 
-            {/* Quick stats */}
+            {/* Quick stats — whole card links (hover like Contact GitHub / LinkedIn) */}
             <div className="anim grid grid-cols-3 gap-4">
-              {[
-                { value: "2", label: "Project\nDeployed" },
-                { value: "3+", label: "Projects\nIn Progress" },
-                { value: "∞", label: "Things\nLearning" },
-              ].map(({ value, label }) => (
-                <div
-                  key={label}
-                  className="border border-cream-300 rounded-xl p-4 bg-cream-100 text-center"
-                >
-                  <p className="text-2xl font-bold text-amber-600">{value}</p>
-                  <p className="text-xs text-warm-gray mt-1 whitespace-pre-line leading-tight">
-                    {label}
-                  </p>
-                </div>
-              ))}
+              {(
+                [
+                  {
+                    value: "2",
+                    label: "Project\nDeployed",
+                    href: "#projects",
+                    variant: "projects",
+                    aria: "Jump to Key Projects — deployed work",
+                  },
+                  {
+                    value: "3+",
+                    label: "Projects\nIn Progress",
+                    href: "#projects",
+                    variant: "projects",
+                    aria: "Jump to Key Projects — work in progress",
+                  },
+                  {
+                    value: "∞",
+                    label: "Things\nLearning",
+                    href: "#skills",
+                    variant: "learning",
+                    aria: "Jump to My Toolkit — skills and learning",
+                  },
+                ] as const
+              ).map(({ value, label, href, variant, aria }) => {
+                const isProjects = variant === "projects";
+                return (
+                  <a
+                    key={label}
+                    href={href}
+                    aria-label={aria}
+                    className={`group block rounded-xl p-4 bg-cream-100 text-center no-underline border transition-all duration-250 ease-out hover:scale-[1.06] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500 ${
+                      isProjects
+                        ? "border-cream-300 hover:border-[#58a6ff] hover:shadow-[0_8px_32px_rgba(88,166,255,0.18)]"
+                        : "border-cream-300 hover:border-[#004182] hover:shadow-[0_8px_32px_rgba(10,102,194,0.18)]"
+                    }`}
+                  >
+                    <p
+                      className={`text-2xl font-bold transition-colors duration-250 ${
+                        isProjects
+                          ? "text-amber-600 group-hover:text-[#58a6ff]"
+                          : "text-amber-600 group-hover:text-[#0A66C2]"
+                      }`}
+                    >
+                      {value}
+                    </p>
+                    <p className="text-xs text-warm-gray mt-1 whitespace-pre-line leading-tight group-hover:text-charcoal-800 transition-colors duration-250">
+                      {label}
+                    </p>
+                  </a>
+                );
+              })}
             </div>
           </div>
         </div>
