@@ -13,8 +13,8 @@ import Footer from "./components/Footer";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-const TAB_TITLE_ACTIVE = "Hello Visitor";
-const TAB_TITLE_AWAY = "Goodbye";
+const TAB_TITLE_ACTIVE = "Welcome Back !";
+const TAB_TITLE_AWAY = "Goodbye :( ";
 const FAVICON_ACTIVE = "/favicon.svg";
 const FAVICON_AWAY = "/sadicon.svg";
 

@@ -31,13 +31,13 @@ const projects: Project[] = [
   },
   {
     id: 3,
-    name: "Brookie",
-    tagline: "E-commerce website",
+    name: "9611 Kafe",
+    tagline: "Coffee shop portfolio website",
     description:
-      "example description",
+      "Marketing portfolio for a café in React and Tailwind featuring menu pages, gallery, maps, and GSAP animations.",
       tech: ["React", "TypeScript", "Python", "GSAP", "Tailwind CSS", "PostgreSQL", "Docker"],
-    github: "https://github.com/mhuy07092004/Cookies-Shop-Website",
-    live: null,
+    github: "https://github.com/mhuy07092004/9611_Kafe",
+    live: "https://9611kafe.vercel.app/",
   },
 ];
 
