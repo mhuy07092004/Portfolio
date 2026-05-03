@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -12,7 +13,25 @@ import Footer from "./components/Footer";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
+const TAB_TITLE_ACTIVE = "Hello Visitor";
+const TAB_TITLE_AWAY = "Goodbye";
+const FAVICON_ACTIVE = "/favicon.svg";
+const FAVICON_AWAY = "/sadicon.svg";
+
+function syncTabPresentation(visible: boolean) {
+  document.title = visible ? TAB_TITLE_ACTIVE : TAB_TITLE_AWAY;
+  const icon = document.querySelector<HTMLLinkElement>('link[rel="icon"]');
+  if (icon) icon.href = visible ? FAVICON_ACTIVE : FAVICON_AWAY;
+}
+
 export default function App() {
+  useEffect(() => {
+    const onVisibility = () => syncTabPresentation(document.visibilityState === "visible");
+    onVisibility();
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => document.removeEventListener("visibilitychange", onVisibility);
+  }, []);
+
   return (
     <div className="font-mono">
       <Navbar />
