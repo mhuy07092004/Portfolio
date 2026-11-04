@@ -64,7 +64,7 @@ export default function Hero() {
           </Link>
           <a
             href="/cv.pdf"
-            download
+            download="Hayden-Loi-CV.pdf"
             className="inline-block border border-charcoal-700 hover:border-amber-500 hover:text-amber-600 text-charcoal-800 font-semibold px-8 py-3 rounded-lg transition-colors duration-200 tracking-wide text-sm"
           >
             My Resumé
