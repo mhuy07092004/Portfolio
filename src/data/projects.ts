@@ -39,7 +39,7 @@ const projects: Project[] = [
     tech: ["React", "TypeScript", "Tailwind CSS", "Vite", "GSAP", "Vercel"],
     github:
       "https://github.com/mhuy07092004/Real-Estate-Valuation-Narrative-Generator",
-    live: "https://relaive.com.au",
+    live: "https://www.relaive.com.au/",
   },
   {
     id: 1,
