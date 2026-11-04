@@ -35,7 +35,7 @@ const projects: Project[] = [
     name: "Relaive",
     tagline: "AI-assisted property appraisal",
     description:
-      "Frontend engineer on a team-built Australian appraisal platform. Built the React/TypeScript SPA, including a GSAP landing page and four role dashboards for agent, valuer, investor and buyer. Each role has its own tools, but all four interfaces share one layout, navigation and design system, so they differ by role while staying visually consistent. Shared pieces include route guards, a report wizard, comparable-sales search, charts, calculators and Google Maps address search.",
+      "Frontend engineer on a team-built platform for Australian property valuation. Built the report-creation UI across four dashboards (agent, valuer, investor, buyer) that share one layout and design system, with tools that differ by role. React/TypeScript, with a GSAP landing page.",
     tech: ["React", "TypeScript", "Tailwind CSS", "Vite", "GSAP", "Vercel"],
     github:
       "https://github.com/mhuy07092004/Real-Estate-Valuation-Narrative-Generator",
