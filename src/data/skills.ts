@@ -23,7 +23,7 @@ const skills: SkillGroup[] = [
       { label: "HTML", status: "active", url: TECH_URLS.HTML },
       { label: "CSS", status: "active", url: TECH_URLS.CSS },
       { label: "Python", status: "active", url: TECH_URLS.Python },
-      { label: "C++", status: "learning", url: TECH_URLS["C++"] },
+      { label: "C++", status: "active", url: TECH_URLS["C++"] },
     ],
   },
   {
@@ -32,7 +32,7 @@ const skills: SkillGroup[] = [
       { label: "React", status: "active", url: TECH_URLS.React },
       { label: "Tailwind CSS", status: "active", url: TECH_URLS["Tailwind CSS"] },
       { label: "GSAP", status: "active", url: TECH_URLS.GSAP },
-      { label: "Next.js", status: "learning", url: TECH_URLS["Next.js"] },
+      { label: "Next.js", status: "active", url: TECH_URLS["Next.js"] },
     ],
   },
   {
@@ -50,9 +50,9 @@ const skills: SkillGroup[] = [
       { label: "Git & GitHub", status: "active", url: TECH_URLS["Git & GitHub"] },
       { label: "npm / pnpm", status: "active", url: TECH_URLS["npm / pnpm"] },
       { label: "Vercel", status: "active", url: TECH_URLS.Vercel },
-      { label: "Docker", status: "learning", url: TECH_URLS.Docker },
+      { label: "Docker", status: "active", url: TECH_URLS.Docker },
       { label: "Linux CLI", status: "learning", url: TECH_URLS["Linux CLI"] },
-      { label: "CI/CD", status: "learning", url: TECH_URLS["CI/CD"] },
+      { label: "CI/CD", status: "active", url: TECH_URLS["CI/CD"] },
     ],
   },
   {

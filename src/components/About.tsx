@@ -29,20 +29,23 @@ export default function About() {
         <div className="grid md:grid-cols-2 gap-12 items-start">
           {/* Avatar card */}
           <div className="anim">
-            <div className="rounded-2xl overflow-hidden border border-amber-200 bg-cream-300 aspect-square max-w-sm mx-auto md:mx-0 flex flex-col items-center justify-center gap-4 p-8">
-              {/* Placeholder avatar */}
-              <div className="w-28 h-28 rounded-full bg-amber-100 border-2 border-amber-400 flex items-center justify-center text-5xl text-amber-500 font-bold select-none">
-                HL
-              </div>
-              <div className="text-center">
-                <p className="font-bold text-charcoal-900 text-lg">Hayden Loi</p>
-                <p className="text-sm text-warm-gray mt-1">Frontend Developer</p>
-                <p className="text-xs text-warm-muted mt-0.5 tracking-wide">
-                  Sydney, Australia
-                </p>
-              </div>
-              <div className="mt-2 px-4 py-2 rounded-full bg-amber-100 border border-amber-300 text-xs text-amber-700 font-medium tracking-wide">
-                🎓 Computer Science Student
+            <div className="rounded-2xl overflow-hidden border border-amber-200 bg-cream-300 max-w-sm mx-auto md:mx-0">
+              <img
+                src="/portfolio%20picture.jpeg"
+                alt="Hayden Loi"
+                className="w-full aspect-[4/5] object-cover object-[center_18%]"
+              />
+              <div className="flex flex-col items-center gap-4 p-6">
+                <div className="text-center">
+                  <p className="font-bold text-charcoal-900 text-lg">Hayden Loi</p>
+                  <p className="text-sm text-warm-gray mt-1">Frontend Developer</p>
+                  <p className="text-xs text-warm-muted mt-0.5 tracking-wide">
+                    Sydney, Australia
+                  </p>
+                </div>
+                <div className="mt-2 px-4 py-2 rounded-full bg-amber-100 border border-amber-300 text-xs text-amber-700 font-medium tracking-wide">
+                  🎓 Computer Science Student
+                </div>
               </div>
             </div>
           </div>
