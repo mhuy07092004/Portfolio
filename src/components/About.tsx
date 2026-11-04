@@ -92,18 +92,18 @@ export default function About() {
               {(
                 [
                   {
-                    value: "2",
-                    label: "Project\nDeployed",
+                    value: "4",
+                    label: "Projects\nDeployed",
                     href: "#projects",
                     variant: "projects",
-                    aria: "Jump to Key Projects — deployed work",
+                    aria: "Jump to My Projects — deployed work",
                   },
                   {
-                    value: "3+",
+                    value: "2",
                     label: "Projects\nIn Progress",
                     href: "#projects",
                     variant: "projects",
-                    aria: "Jump to Key Projects — work in progress",
+                    aria: "Jump to My Projects — work in progress",
                   },
                   {
                     value: "∞",

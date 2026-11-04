@@ -38,8 +38,8 @@ const skills: SkillGroup[] = [
   {
     category: "Backend & Database",
     skills: [
-      { label: "Node.js", status: "learning", url: TECH_URLS["Node.js"] },
-      { label: "PostgreSQL", status: "learning", url: TECH_URLS.PostgreSQL },
+      { label: "Node.js", status: "active", url: TECH_URLS["Node.js"] },
+      { label: "PostgreSQL", status: "active", url: TECH_URLS.PostgreSQL },
       { label: "MongoDB", status: "learning", url: TECH_URLS.MongoDB },
     ],
   },

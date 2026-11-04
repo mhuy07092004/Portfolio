@@ -6,9 +6,41 @@ export interface Project {
   tech: string[];
   github: string;
   live: string | null;
+  badge?: string;
 }
 
 const projects: Project[] = [
+  {
+    id: 4,
+    name: "My Pay",
+    badge: "Solo Project",
+    tagline: "Shift tracker & PAYG tax estimator (Australia)",
+    description:
+      "Solo-built full-stack app for Australian shift workers: log shifts, apply multiple Award pay rates, and estimate gross, PAYG tax and net pay. Bilingual (English & Vietnamese). React frontend, Express API, shared pay/tax engine, Supabase Auth + Postgres with RLS, deployed on Vercel.",
+    tech: [
+      "React",
+      "TypeScript",
+      "Node.js",
+      "Express",
+      "Supabase",
+      "PostgreSQL",
+      "Tailwind CSS",
+      "Vercel",
+    ],
+    github: "https://github.com/mhuy07092004/My-Pay",
+    live: "https://wheresmypay.vercel.app/",
+  },
+  {
+    id: 5,
+    name: "Relaive",
+    tagline: "AI-assisted property appraisal",
+    description:
+      "Frontend engineer on a team-built appraisal platform: built the React/TypeScript UI with role-based dashboards, comparable-sales views, charts, Google Maps search and a GSAP-animated landing page.",
+    tech: ["React", "TypeScript", "Tailwind CSS", "Vite", "GSAP", "Vercel"],
+    github:
+      "https://github.com/mhuy07092004/Real-Estate-Valuation-Narrative-Generator",
+    live: "https://relaive.com.au",
+  },
   {
     id: 1,
     name: "ParkIt",

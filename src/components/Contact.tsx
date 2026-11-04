@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import type { ReactNode } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -85,6 +85,12 @@ const LINKS: ContactLink[] = [
 
 export default function Contact() {
   const sectionRef = useRef<HTMLElement>(null);
+  const [showYoutubeLink, setShowYoutubeLink] = useState(false);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setShowYoutubeLink(true), 15_000);
+    return () => window.clearTimeout(timer);
+  }, []);
 
   useGSAP(
     () => {
@@ -185,6 +191,18 @@ export default function Contact() {
         <p className="contact-meta mt-14 text-sm text-warm-muted">
           Find me anywhere above. I typically respond within 48 hrs.
         </p>
+        {showYoutubeLink && (
+          <p className="mt-3 text-sm">
+            <a
+              href="https://www.youtube.com/@ItsHuyz"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-amber-600 hover:text-amber-700 font-medium transition-colors duration-250 underline underline-offset-4 decoration-amber-400/50 hover:decoration-amber-600"
+            >
+              Another Version Of Me Here!
+            </a>
+          </p>
+        )}
       </div>
     </section>
   );

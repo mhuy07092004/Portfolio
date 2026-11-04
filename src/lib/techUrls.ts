@@ -17,6 +17,8 @@ export const TECH_URLS: Record<string, string> = {
   "Node.js": "https://nodejs.org/",
   PostgreSQL: "https://www.postgresql.org/",
   MongoDB: "https://www.mongodb.com/docs/",
+  Supabase: "https://supabase.com/",
+  Express: "https://expressjs.com/",
   // Tools
   Vite: "https://vitejs.dev/",
   "Git & GitHub": "https://github.com/",

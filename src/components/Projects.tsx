@@ -60,6 +60,23 @@ function ProjectCard({ project }: { project: Project }) {
       <div className="h-0.5 w-full bg-gradient-to-r from-amber-400/0 via-amber-400 to-amber-400/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
       <div className="flex flex-col flex-1 p-6">
+        {/* Status badges */}
+        {(project.live || project.badge) && (
+          <div className="flex flex-wrap items-center gap-2 mb-3">
+            {project.badge && (
+              <span className="px-3 py-1 rounded-full bg-amber-500 border border-amber-500 text-white text-[10px] font-semibold tracking-[0.2em] uppercase shadow-sm shadow-amber-200">
+                {project.badge}
+              </span>
+            )}
+            {project.live && (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 border border-amber-300 text-amber-700 text-[10px] font-medium tracking-[0.2em] uppercase">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+                In Production
+              </span>
+            )}
+          </div>
+        )}
+
         {/* Header */}
         <div className="flex items-start justify-between gap-2 mb-3">
           <div>
@@ -173,7 +190,7 @@ export default function Projects() {
           02 / Projects
         </p>
         <h2 className="proj-meta text-3xl md:text-4xl font-bold text-charcoal-900 mb-4 tracking-tight">
-          Key Projects
+          My Projects
         </h2>
         <p className="proj-meta text-warm-gray text-sm mb-12 max-w-lg">
           A selection of projects — each one an excuse to learn something new

@@ -19,6 +19,8 @@ import {
   SiMongodb,
   SiVercel,
   SiFlask,
+  SiSupabase,
+  SiExpress,
 } from "react-icons/si";
 import { TbPlayerPlay, TbNetwork, TbShieldLock } from "react-icons/tb";
 import { VscTerminalBash } from "react-icons/vsc";
@@ -51,6 +53,8 @@ export const TECH_COLORS: Record<string, string> = {
   "Node.js": "#339933",
   PostgreSQL: "#336791",
   MongoDB: "#47A248",
+  Supabase: "#3ECF8E",
+  Express: "#888888",
 };
 
 export const TECH_ICONS: Record<string, ReactNode> = {
@@ -80,4 +84,6 @@ export const TECH_ICONS: Record<string, ReactNode> = {
   "Node.js": <SiNodedotjs />,
   PostgreSQL: <SiPostgresql />,
   MongoDB: <SiMongodb />,
+  Supabase: <SiSupabase />,
+  Express: <SiExpress />,
 };
